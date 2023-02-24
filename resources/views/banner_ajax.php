@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 /* Llamar la Cadena de Conexion*/
 include("conn.php");
 $action = (isset($_REQUEST['action']) && $_REQUEST['action'] != NULL) ? $_REQUEST['action'] : '';
@@ -7,6 +8,9 @@ if ($action == 'ajax') {
 	//Elimino producto
 	if (isset($_REQUEST['id'])) {
 		$id_banner = intval($_REQUEST['id']);
+		if (empty($id_banner)) {
+			exit("No existe el parámetro id");
+		}
 		if ($delete = $con->prepare("delete from fotos where id='$id_banner'")) {
 			$delete->execute();
 			echo 1;
@@ -23,14 +27,14 @@ if ($action == 'ajax') {
 
 
 	$sWhere .= " order by id";
-	include 'pagination.php'; //include pagination file
-	//pagination variables
+	include 'pagination.php';
+
 	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
-	$per_page = 12; //how much records you want to show
-	$adjacents  = 4; //gap between pages after number of adjacents
+	$per_page = 12;
+	$adjacents  = 4;
 	$offset = ($page - 1) * $per_page;
 
-	//Count the total number of row in your table*/
+
 	include_once('conn.php');
 	$count_query  = $con->prepare("SELECT count(*) AS numrows FROM $tables  $sWhere ");
 	$count_query->execute();
@@ -43,8 +47,7 @@ if ($action == 'ajax') {
 	}
 	$total_pages = ceil($numrows / $per_page);
 	$reload = './welcome.blade.php';
-	//main query to fetch the data
-	$query = $con->prepare("SELECT * FROM  $tables  $sWhere LIMIT $offset,$per_page");
+
 
 
 	if (isset($message)) {
@@ -65,43 +68,49 @@ if ($action == 'ajax') {
 
 	<?php
 	}
-	//loop through fetched data
+
 	if ($numrows > 0) {
+
 	?>
 
 		<div class="row">
 			<?php
-			while ($row = $query) {
-				$row = $query->fetch(PDO::FETCH_OBJ);
-				$url_image = $row['ruta_archivo'];
-				$cliente = $row['id_cliente'];
-				$presinto = $row['presinto'];
-				$fecha = $row['fecha_foto'];
-				$id_slide = $row['id'];
+			$query = $con->prepare("SELECT id, id_cliente, presinto, fecha_foto, ruta_archivo  FROM  $tables  $sWhere LIMIT $offset,$per_page");
+			$query->execute();
+
+			while ($row = $query->fetchObject()) {
+				$id_slide = $row->id;
+				$cliente = $row->id_cliente;
+				$presinto = $row->presinto;
+				$fecha = $row->fecha_foto;
+				$url_image = base64_encode($row->ruta_archivo);
+				
 
 			?>
-
 				<div class="col-sm-6 col-md-3">
 					<div class="thumbnail">
-						<img src="../img/banner/<?php echo $url_image; ?>" alt="...">
+						<?php echo "<img src='data:image/png; base64," . $url_image . "'>"; ?>
 						<div class="caption">
 							<h3><?php echo $cliente; ?></h3>
+							<h4><?php echo $presinto; ?></h4>
 
-							<p class='text-right'><a href="banneredit.php?id=<?php echo intval($id_slide); ?>" class="btn btn-info" role="button"><i class='glyphicon glyphicon-edit'></i> Editar</a> <button type="button" class="btn btn-danger" onclick="eliminar_slide('<?php echo $id_slide; ?>');" role="button"><i class='glyphicon glyphicon-trash'></i> Eliminar</button></p>
+							<p class='text-right'><a href="banneredit.php?id=<?php echo intval($id_slide); ?>" class="btn btn-info" role="button"><i class='glyphicon glyphicon-edit'>
+
+									</i> Editar</a> <button type="button" class="btn btn-danger" onclick="eliminar_slide('<?php echo $id_slide; ?>');" role="button"><i class='glyphicon glyphicon-trash'></i> Eliminar</button></p>
 						</div>
 					</div>
 				</div>
-
-			<?php
+		<?php
 			}
-			?>
+		}
+		?>
 		</div>
 
 		<div class="table-pagination text-right">
 
 			<?php echo paginate($reload, $page, $total_pages, $adjacents); ?>
 		</div>
-<?php
-	}
+	<?php
 }
-?>
+
+	?>

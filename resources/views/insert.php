@@ -1,19 +1,14 @@
 <?php
-$imagenCodificada = file_get_contents("php://input"); 
-if(strlen($imagenCodificada) <= 0) exit("No se recibió ninguna imagen");
 
+$imagenCodificada =  addslashes(file_get_contents("php://input")); 
+    if(strlen($imagenCodificada)<= 0 )exit("Error");
+   
+$imagenDecodificada = base64_decode($imagenCodificada);
 
-$imagenCodificadaLimpia = str_replace("data:image/png;base64,", "", urldecode($imagenCodificada));
-$imagenDecodificada = base64_decode($imagenCodificadaLimpia);
-
-$client = $_POST['client'];
-$presinto = $_POST['presinto'];
-$date = $_POST['date'];
 
 include_once "conn.php";
-$sentencia = $con->prepare("INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
-VALUES ('" . $client . "','" . $presinto . "','" . $date . "','" . $imagenCodificadaLimpia . "')");
-$sentencia->execute();
-$id = $conn->lastInsertId();
+$fotoo = $con->query("INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`) 
+VALUES('" . $client . "','" . $presinto . "','" . $date . "'," . $imagenDecodificada  . ");");
+
 
 ?>
