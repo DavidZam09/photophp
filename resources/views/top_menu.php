@@ -13,7 +13,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
            <li class="active"><a href="search.php"><i class='glyphicon glyphicon-film'></i> Galería</a></li>
-		   <li><a href="../" target="_blank"><i class='glyphicon glyphicon-blackboard'></i> Ver sitio</a></li>
+		   <li><a href="https:/ultralav.com.co/" target="_blank"><i class='glyphicon glyphicon-blackboard'></i> Ver sitio</a></li>
           </ul>
         </li>
       </div>

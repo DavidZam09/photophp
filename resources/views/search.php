@@ -17,9 +17,9 @@ $active_banner = "active";
     <meta name="author" content="">
     <link rel="icon" href="../images/ico/favicon.ico">
     <title><?php echo $title; ?></title>
-   
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-   
+
 
 </head>
 
@@ -28,7 +28,7 @@ $active_banner = "active";
 
     <div class="container">
 
-      
+
         <div class="row">
 
             <ol class="breadcrumb">
@@ -36,6 +36,7 @@ $active_banner = "active";
                 <li class="active">Banner</li>
             </ol>
             <div class="row">
+                
                 <div class="col-xs-12 text-right">
                     <a href='welcome.blade.php' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Diseño</a>
                 </div>
@@ -47,13 +48,14 @@ $active_banner = "active";
             <div class="outer_div"></div>
         </div>
 
-    </div> 
+    </div>
     <?php include("footer.php"); ?>
-  
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
+
 
 </html>
 <script>

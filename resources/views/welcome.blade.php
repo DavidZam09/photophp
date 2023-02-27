@@ -13,7 +13,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.25/webcam.min.js"></script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        #cam {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
 
+        #camps {
+            display: flex;
+            flex-direction: column;
+            align-items: right;
+        }
+    </style>
 
 </head>
 
@@ -22,33 +34,36 @@
 
     <div class="container" style="margin-top: 50px;">
         <h1 class="text-center">PhotoCollector</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <select name="listaDeDispositivos" id="listaDeDispositivos"></select>
-                <div>
-                    <br />
-                    <input type="text" value="Cliente" name="client">
-                    <br />
-                    <input type="text" value="Presinto" name="presinto">
-                    <br />
-                    <input type="date" name="date">
-                </div>
-                <p id="estado"></p>
-                <div id="results">
-
-                </div>
-            </div>
-            <div class="col-md-6">
-                <video muted="muted" id="video"></video>
-
-                <canvas id="canvas" style="display: none;"></canvas>
-                <button class="btn btn-success" id="boton">Capturar</button>
-            </div>
-            <div class="col-md-12">
-                <br />
-                <button class="btn btn-success" id="snapshot">Guardar</button>
-            </div>
+        <div class="col-md-6" id="cam">
+            <video muted="muted" id="video"></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <button class="btn btn-success" id="boton">Capturar</button>
         </div>
+        <form method="POST" action="insert.php">
+            <div class="row" id="camps">
+                <div class="col-md-6">
+                    <select name="listaDeDispositivos" id="listaDeDispositivos"></select>
+                    <div>
+                        <br />
+                        <input type="text" placeholder="CLIENTE" name="client">
+                        <br />
+                        <input type="text" placeholder="PRESINTO" name="presinto">
+                        <br />
+                        <input type="date" name="date">
+                    </div>
+                    <p id="estado"></p>
+                    <div id="results">
+                      
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <br />
+                    <button class="btn btn-success" id="snapshot">Guardar</button>
+                </div>
+            </div>
+        </form>
+
     </div>
     <?php include("footer.php"); ?>
 
@@ -192,13 +207,10 @@
                         foto = $canvas.toDataURL(); //Esta es la foto, en base 64
 
                         $estado.innerHTML = "Enviando foto. Por favor, espera...";
+                        $estado.innerHTML = "<img src='" + foto + "' />";
 
+                        $results.innerHTML = "<input type='hidden' name='img' id='img' value='" + foto + "' />";
 
-
-                        $results.innerHTML = "<img src='" + foto + "' alt='...'>";
-
-
-                  
                         $video.play();
 
                     });
@@ -208,8 +220,7 @@
                 });
 
             $botonSnapshot.addEventListener('click', function() {
-                $results.innerHTML = "<img src='" + foto + "' alt='...'>";
-                fetch("./insert.php", {
+                /*fetch("./insert.php", {
                         method: "POST",
                         body: encodeURIComponent(foto),
                         headers: {
@@ -225,7 +236,7 @@
                         console.log("La foto fue enviada correctamente");
                         $estado.innerHTML = `Foto guardada con éxito. Puedes verla <a target='_blank' href='./search.php?id=${idFoto}'> aquí</a>`;
 
-                    })
+                    })*/
                 $video.play();
             });
         }
@@ -239,6 +250,7 @@
         var data = new FormData();
         data.append('fileToUpload', file);
         data.append('id', id_banner);
+        intval($_POST['id']);
 
         $.ajax({
             url: "ajax/upload_banner.php", // Url to which the request is send
