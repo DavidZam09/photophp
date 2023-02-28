@@ -47,7 +47,7 @@
                         <br />
                         <input type="text" placeholder="CLIENTE" name="client">
                         <br />
-                        <input type="text" placeholder="PRESINTO" name="presinto">
+                        <input type="text" placeholder="PRECINTO" name="presinto">
                         <br />
                         <input type="date" name="date">
                     </div>

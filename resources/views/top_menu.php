@@ -12,9 +12,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-           <li class="active"><a href="search.php"><i class='glyphicon glyphicon-film'></i> Galería</a></li>
-		   <li><a href="https:/ultralav.com.co/" target="_blank"><i class='glyphicon glyphicon-blackboard'></i> Ver sitio</a></li>
+            <li class="active"><a href="search.php"><i class='glyphicon glyphicon-film'></i> Galería</a></li>
+            <li><a href="search_client.php"><i class='glyphicon glyphicon-search'></i> Buscar Diseños</a></li>
+            <li><a href="https:/ultralav.com.co/" target="_blank"><i class='glyphicon glyphicon-blackboard'></i> Ver sitio</a></li>
           </ul>
-        </li>
-      </div>
+          </li>
+        </div>
     </nav>

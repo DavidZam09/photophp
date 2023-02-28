@@ -84,21 +84,21 @@ if ($action == 'ajax') {
 				$presinto = $row->presinto;
 				$fecha = $row->fecha_foto;
 				$url_image = $row->ruta_archivo;
-
-
 			?>
-				
+
 				<div class="col-sm-6 col-md-3">
 					<div class="thumbnail">
 						<?php echo "<img src='../img/" . $url_image . "'>"; ?>
 						<div class="caption" style="text-align: center;">
 							<h3>Cliente: <?php echo $cliente; ?></h3>
-							<h4>Presinto: <?php echo $presinto; ?></h4>
+							<h4>Precinto: <?php echo $presinto; ?></h4>
 							<p>Fecha: <?php echo $fecha ?></p>
 
-							<p class='text-right'><a href="banneredit.php?id=<?php echo intval($id_slide); ?>" class="btn btn-info" role="button"><i class='glyphicon glyphicon-edit'>
-
-									</i> Editar</a> <button type="button" class="btn btn-danger" onclick="eliminar_slide('<?php echo $id_slide; ?>');" role="button"><i class='glyphicon glyphicon-trash'></i> Eliminar</button></p>
+							<p class='text-right'><a href="banneredit.php?id=<?php echo intval($id_slide); ?>" class="btn btn-info" role="button">
+									<i class='glyphicon glyphicon-eye-open'></i> </a>
+								<!--<button type="button" class="btn btn-danger" onclick="eliminar_slide('<?php // echo $id_slide; ?>');" role="button">
+									<i class='glyphicon glyphicon-trash'></i> Eliminar</button>-->
+							</p>
 						</div>
 					</div>
 				</div>
