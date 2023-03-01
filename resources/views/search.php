@@ -1,6 +1,6 @@
 <?php
 $title = "Galería";
-include("./conn.php");
+include("../models/conn.php");
 $active_config = "active";
 $active_banner = "active";
 
@@ -17,10 +17,15 @@ $active_banner = "active";
     <meta name="author" content="">
     <link rel="icon" href="../images/ico/favicon.ico">
     <title><?php echo $title; ?></title>
+    <link rel="stylesheet" href="../css/app.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-
+<style>
+    .breadcrumb{
+        margin-top: 70px;
+    }
+</style>
 </head>
 
 <body>
@@ -36,7 +41,7 @@ $active_banner = "active";
                 <li class="active">Banner</li>
             </ol>
             <div class="row">
-                
+
                 <div class="col-xs-12 text-right">
                     <a href='welcome.blade.php' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Diseño</a>
                 </div>
@@ -69,7 +74,7 @@ $active_banner = "active";
             "page": page
         };
         $.ajax({
-            url: './banner_ajax.php',
+            url: '../models/banner_ajax.php',
             data: parametros,
             beforeSend: function(objeto) {
                 $("#loader").html("<img src='../img/giphy.gif'>");
@@ -90,7 +95,7 @@ $active_banner = "active";
         };
         if (confirm('Esta acción  eliminará de forma permanente el banner \n\n Desea continuar?')) {
             $.ajax({
-                url: './banner_ajax.php',
+                url: '../models/banner_ajax.php',
                 data: parametros,
                 beforeSend: function(objeto) {
                     $("#loader").html("<img src='../images/giphy.gif'>");

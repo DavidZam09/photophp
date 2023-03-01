@@ -14,15 +14,15 @@ $fileName = uniqid() . '.png';
 
 $file = $folderPath . $fileName;
 file_put_contents($file, $image_base64);
-//$imagenCodificada =  addslashes(file_get_contents("php://input")); 
+//$imagenCodificada =  addslashes(file_get_contents("php://input"));
 // if(strlen($imagenCodificada)<= 0 )exit("Error");
 
 //$imagenDecodificada = base64_decode($imagenCodificada);
 
 include_once "conn.php";
-$fotoo = $con->query("INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`) 
+$fotoo = $con->query("INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
 VALUES('" . $client . "','" . $presinto . "','" . $date . "','" . $fileName . "');");
 
-header("Location: welcome.blade.php");
+header("Location: ../views/welcome.blade.php");
 
 ?>

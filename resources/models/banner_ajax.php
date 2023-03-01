@@ -27,7 +27,7 @@ if ($action == 'ajax') {
 
 
 	$sWhere .= " order by id";
-	include 'pagination.php';
+	include '../views/pagination.php';
 
 	$page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
 	$per_page = 12;
@@ -96,8 +96,8 @@ if ($action == 'ajax') {
 
 							<p class='text-right'><a href="banneredit.php?id=<?php echo intval($id_slide); ?>" class="btn btn-info" role="button">
 									<i class='glyphicon glyphicon-eye-open'></i> </a>
-								<!--<button type="button" class="btn btn-danger" onclick="eliminar_slide('<?php // echo $id_slide; ?>');" role="button">
-									<i class='glyphicon glyphicon-trash'></i> Eliminar</button>-->
+								<button type="button" class="btn btn-danger" onclick="eliminar_slide('<?php echo $id_slide; ?>');" role="button">
+									<i class='glyphicon glyphicon-trash'></i> Eliminar</button>
 							</p>
 						</div>
 					</div>

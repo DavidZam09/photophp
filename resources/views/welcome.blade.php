@@ -39,7 +39,7 @@
             <canvas id="canvas" style="display: none;"></canvas>
             <button class="btn btn-success" id="boton">Capturar</button>
         </div>
-        <form method="POST" action="insert.php">
+        <form method="POST" action="../models/insert.php">
             <div class="row" id="camps">
                 <div class="col-md-6">
                     <select name="listaDeDispositivos" id="listaDeDispositivos"></select>
@@ -53,7 +53,7 @@
                     </div>
                     <p id="estado"></p>
                     <div id="results">
-                      
+
                     </div>
                 </div>
 

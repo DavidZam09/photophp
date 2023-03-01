@@ -8,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>PHOTO COLLECTOR - PHP</title>
+    <title>Search</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
@@ -52,7 +52,8 @@
             align-items: center;
 
         }
-        #alert{
+
+        #alert {
             justify-content: center;
             align-items: center;
             display: flex;
@@ -99,7 +100,7 @@
             $per_page = 12;
             $adjacents  = 4;
             $offset = ($page - 1) * $per_page;
-            include_once('conn.php');
+            include_once('../models/conn.php');
             $count_query  = $con->prepare("SELECT count(*) AS numrows FROM fotos  ORDER BY id ");
             $count_query->execute();
 
@@ -109,6 +110,16 @@
                 $numrows = $row->numrows;
             } else {
                 echo $con . error_log(1);
+            ?>
+                <div id="alert">
+                    <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
+                        <img style='align-items: center; justify-content: center; text-align: center;' src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
+                    </div>
+                    <div class='caption'>
+                        <label>No hay Diseños, Intenta Buscar de Nuevo</label>
+                    </div>
+                </div>
+                <?php
             }
             $total_pages = ceil($numrows / $per_page);
             $reload = './welcome.blade.php';
@@ -117,19 +128,19 @@
                 if (isset($_GET['boton']) && $_GET['campo'] != null) {
 
                     $campo = $_GET['campo'];
-                    include_once('conn.php');
+                    include_once('../models/conn.php');
                     $query = $con->query("SELECT * FROM fotos where `id_cliente` LIKE '%$campo%' OR `presinto` LIKE '%$campo%' ORDER BY `presinto`");
 
                     if ($query->fetch() == null) {
 
-            ?>
+                ?>
 
-                        <div id="alert" >
+                        <div id="alert">
                             <div class='thumbnail'>
                                 <img src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
                             </div>
                             <div class='caption'>
-                                <label>No hay Diseños, Intenta Buscar de Nuevo</label>
+                                <label>No hay Diseños con este precinto o nombre de cliente, Intenta Buscar de Nuevo</label>
                             </div>
                         </div>
                         <?php
@@ -164,18 +175,38 @@
                     }
                 } else {
                     ?>
-                    
-                        <div id="alert" >
-                            <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
-                                <img style='align-items: center; justify-content: center; text-align: center;' src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
-                            </div>
-                            <div class='caption'>
-                                <label>No hay Diseños, Intenta Buscar de Nuevo</label>
-                            </div>
+
+                    <div id="alert">
+                        <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
+                            <img style='align-items: center; justify-content: center; text-align: center;' src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
                         </div>
-                   
-            <?php
+                        <div class='caption'>
+                            <label>No hay Diseños, Intenta Buscar de Nuevo</label>
+                        </div>
+                    </div>
+
+                <?php
                 }
+            } else {
+                ?>
+
+                <div id="alert">
+                    <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
+                        <img style='align-items: center; justify-content: center; text-align: center;' src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
+                    </div>
+                    <div class='caption'>
+                        <label>No hay Diseños</label>
+                        <div class="row">
+
+                            <div class="col-xs-12 text-right">
+                                <a href='welcome.blade.php' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Diseño</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            <?php
             }
             ?>
         </div>
