@@ -21,11 +21,11 @@ $active_banner = "active";
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-<style>
-    .breadcrumb{
-        margin-top: 70px;
-    }
-</style>
+    <style>
+        .breadcrumb {
+            margin-top: 70px;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,9 +46,11 @@ $active_banner = "active";
                     <a href='welcome.blade.php' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Diseño</a>
                 </div>
 
+
             </div>
 
             <br>
+
             <div id="loader" class="text-center"> <span><img src="../img/giphy.gif"></span></div>
             <div class="outer_div"></div>
         </div>
@@ -103,6 +105,30 @@ $active_banner = "active";
                 success: function(data) {
                     $(".outer_div").html(data).fadeIn('slow');
                     $("#loader").html("");
+                }
+            })
+        }
+    }
+
+
+    function ver(id) {
+        page = 1;
+        var parametros = {
+            "action": "ajax",
+            "page": page,
+            "id": id
+        };
+        if (parametros.action == "ajax") {
+            $.ajax({
+                url: '../models/ver.php',
+                data: parametros,
+                beforeSend: function(objeto) {
+                    $("#loader").html("<img src='../images/giphy.gif'>");
+                },
+                success: function(data) {
+                    $(".outer_div").html(data).fadeIn('slow');
+                    $("#loader").html("");
+
                 }
             })
         }

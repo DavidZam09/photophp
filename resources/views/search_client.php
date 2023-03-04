@@ -12,45 +12,27 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
-        body {
-            padding-top: 70px;
-            padding-bottom: 70px;
-            padding-left: 15rem;
-            padding-right: 15rem;
-            align-items: center;
-        }
-
-        .contenido {
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-        }
-
         .titulo {
             text-align: center;
             align-items: center;
             justify-content: center;
         }
 
-        #boton {
-            background-color: green;
-            color: white;
-            border-radius: 2px 4px 2px solid white;
-            justify-content: center;
-        }
-
         #campo {
             height: 100%;
-            width: 50%;
-            margin-left: 25%;
-
+            width: 100%;
         }
 
         .img {
             text-align: center;
             justify-content: center;
             align-items: center;
+        }
 
+        #row {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
         }
 
         #alert {
@@ -69,8 +51,8 @@
     <div class="titulo">
         <h3> Consultar Diseños</h3>
     </div>
-    <div class="contenido">
-        <div class="row">
+    <div class="container">
+        <div class="row" id="row">
             <form action="" method="get">
                 <div class="form-group">
                     <div>
@@ -85,15 +67,8 @@
                     </div>
                 </div>
             </form>
-
-
-
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-
-
             <?php
             include 'pagination.php';
             $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
@@ -129,7 +104,7 @@
 
                     $campo = $_GET['campo'];
                     include_once('../models/conn.php');
-                    $query = $con->query("SELECT * FROM fotos where `id_cliente` LIKE '%$campo%' OR `presinto` LIKE '%$campo%' ORDER BY `presinto`");
+                    $query = $con->query("SELECT * FROM fotos where `id_cliente` LIKE '%$campo%' OR `presinto` LIKE '%$campo%' ORDER BY `fecha_foto` ASC");
 
                     if ($query->fetch() == null) {
 
@@ -178,7 +153,7 @@
 
                     <div id="alert">
                         <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
-                            <img style='align-items: center; justify-content: center; text-align: center;' src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
+                            <img src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
                         </div>
                         <div class='caption'>
                             <label>No hay Diseños, Intenta Buscar de Nuevo</label>
@@ -191,8 +166,8 @@
                 ?>
 
                 <div id="alert">
-                    <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
-                        <img style='align-items: center; justify-content: center; text-align: center;' src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
+                    <div class='thumbnail'>
+                        <img src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
                     </div>
                     <div class='caption'>
                         <label>No hay Diseños</label>
@@ -206,7 +181,54 @@
                     </div>
                 </div>
 
+                <?php
+            }
+            if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET["titulo"])) {
+
+                include("../../conexion.php");
+
+                $titulo = mysqli_real_escape_string($conn, (strip_tags($_POST['titulo'], ENT_QUOTES)));
+                $descripcion = mysqli_real_escape_string($conn, ($_POST['descripcion']));
+                $orden = intval($_POST['orden']);
+                $estado = intval($_POST['estado']);
+                $id_banner = intval($_POST['id_banner']);
+                $sql = "UPDATE banner SET titulo='$titulo', descripcion='$descripcion', orden='$orden', estado='$estado' WHERE id='$id_banner'";
+                $query = mysqli_query($conn, $sql);
+                // if user has been added successfully
+                if ($query) {
+                    $messages[] = "Datos  han sido actualizados satisfactoriamente.";
+                } else {
+                    $errors[] = "Lo siento algo ha salido mal intenta nuevamente." . mysqli_error($conn);
+                }
+
+                if (isset($errors)) {
+
+                ?>
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Error!</strong>
+                        <?php
+                        foreach ($errors as $error) {
+                            echo $error;
+                        }
+                        ?>
+                    </div>
+                <?php
+                }
+                if (isset($messages)) {
+
+                ?>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>¡Bien hecho!</strong>
+                        <?php
+                        foreach ($messages as $message) {
+                            echo $message;
+                        }
+                        ?>
+                    </div>
             <?php
+                }
             }
             ?>
         </div>
@@ -216,6 +238,7 @@
         </div>
     </div>
     <?php include("footer.php"); ?>
+
 
 </body>
 
