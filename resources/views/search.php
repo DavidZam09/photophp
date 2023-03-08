@@ -25,6 +25,15 @@ $active_banner = "active";
         .breadcrumb {
             margin-top: 70px;
         }
+
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, .0001) !important;
+        }
+
+        #modal {
+            text-align: center;
+            background-color: rgba(0, 0, 0, .0001) !important;
+        }
     </style>
 </head>
 
@@ -32,7 +41,6 @@ $active_banner = "active";
     <?php include("top_menu.php"); ?>
 
     <div class="container">
-
 
         <div class="row">
 
@@ -54,13 +62,14 @@ $active_banner = "active";
             <div id="loader" class="text-center"> <span><img src="../img/giphy.gif"></span></div>
             <div class="outer_div"></div>
         </div>
-
     </div>
+    <?php include("modal.php"); ?>
     <?php include("footer.php"); ?>
-
+    <script src="../js/search.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
 </body>
 
 
@@ -105,30 +114,6 @@ $active_banner = "active";
                 success: function(data) {
                     $(".outer_div").html(data).fadeIn('slow');
                     $("#loader").html("");
-                }
-            })
-        }
-    }
-
-
-    function ver(id) {
-        page = 1;
-        var parametros = {
-            "action": "ajax",
-            "page": page,
-            "id": id
-        };
-        if (parametros.action == "ajax") {
-            $.ajax({
-                url: '../models/ver.php',
-                data: parametros,
-                beforeSend: function(objeto) {
-                    $("#loader").html("<img src='../images/giphy.gif'>");
-                },
-                success: function(data) {
-                    $(".outer_div").html(data).fadeIn('slow');
-                    $("#loader").html("");
-
                 }
             })
         }

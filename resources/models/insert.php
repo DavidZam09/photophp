@@ -35,7 +35,7 @@ if (isset($message)) {
     </div>
 
 <?php
-}
+};
 if (isset($error)) {
 ?>
     <div class="alert alert-danger alert-dismissible fade in" role="alert">
@@ -44,7 +44,7 @@ if (isset($error)) {
     </div>
 
 <?php
-}
+};
 
 header("Location: ../views/welcome.blade.php");
 

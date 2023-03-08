@@ -13,7 +13,6 @@ if ($action == 'ajax') {
         }
         if ($delete = $con->prepare("delete from fotos where id='$id_banner'")) {
             $delete->execute();
-            echo 1;
             $message = "Datos eliminados satisfactoriamente";
         } else {
             $error = "No se pudo eliminar los datos";
@@ -46,8 +45,6 @@ if ($action == 'ajax') {
     }
     $total_pages = ceil($numrows / $per_page);
     $reload = './welcome.blade.php';
-
-
 
     if (isset($message)) {
 ?>
@@ -87,14 +84,20 @@ if ($action == 'ajax') {
                 <form action="" method="post">
                     <div class="col-sm-6 col-md-3">
                         <div class="thumbnail">
+                            <input type="hidden" id="precinto" name="precinto" value="<?php echo $presinto ?>" />
+                            <input type="hidden" id="url" name="url" value="<?php echo $url_image ?>" />
+                            <input type="hidden" id="cliente" name="cliente" value="<?php echo $cliente ?>" />
+                            <input type="hidden" id="fecha" name="fecha" value="<?php echo $fecha ?>" />
                             <input type="hidden" id="id" name="id" value="<?php echo $id_slide ?>" />
+
                             <?php echo "<img src='../img/" . $url_image . "'>"; ?>
                             <div class="caption" style="text-align: center;">
-
-                                <h3>Cliente: <?php echo $cliente; ?></h3>
-                                <h4>Precinto: <?php echo $presinto; ?></h4>
+                                <p>Cliente: <?php echo $cliente; ?>
+                                <p>
+                                <p>Precinto: <?php echo $presinto; ?>
+                                <p>
                                 <p>Fecha: <?php echo $fecha ?></p>
-                                <button type="submit" class="btn btn-primary" id="myBtn">
+                                <button type="button" class="btn btn-primary" onclick="mostrarModal(<?php echo $id_slide ?>)">
                                     <i class='glyphicon glyphicon-eye-open'></i> ver</button>
                                 <button type="button" class="btn btn-danger" onclick="eliminar_slide('<?php echo $id_slide; ?>');" role="button">
                                     <i class='glyphicon glyphicon-trash'></i> Eliminar</button>
@@ -104,6 +107,7 @@ if ($action == 'ajax') {
                     </div>
                 </form>
 
+
         <?php
             }
         }
@@ -111,36 +115,12 @@ if ($action == 'ajax') {
 
         </div>
 
+
         <div class="table-pagination text-right">
 
             <?php echo paginate($reload, $page, $total_pages, $adjacents); ?>
         </div>
-        <script>
-            var modal = document.getElementById("myModal");
 
-
-            var btn = document.getElementById("myBtn");
-
-
-            var span = document.getElementsByClassName("close")[0];
-
-
-            btn.onclick = function() {
-                modal.style.display = "block";
-            };
-
-
-            span.onclick = function() {
-                modal.style.display = "none";
-            };
-
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        </script>
     <?php
 }
 

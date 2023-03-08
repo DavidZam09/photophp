@@ -9,6 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Search</title>
+    <link rel="stylesheet" href="../css/modal.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <style>
@@ -137,8 +138,8 @@
                                         <h4>Precinto: <?php echo $presinto; ?></h4>
                                         <p>Fecha: <?php echo $fecha ?></p>
 
-                                        <p class='text-right'><a href="view_desing.php?id=<?php echo intval($id_slide); ?>" class="btn btn-info" role="button">
-                                                <i class='glyphicon glyphicon-eye-open'></i></a>
+                                        <button type="button" class="btn btn-primary" onclick="mostrarModal(<?php echo $id_slide ?>)">
+                                            <i class='glyphicon glyphicon-eye-open'></i> ver</button>
                                         </p>
                                     </div>
                                 </div>
@@ -237,9 +238,10 @@
             <?php echo paginate($reload, $page, $total_pages, $adjacents); ?>
         </div>
     </div>
+    <?php include("modal.php") ?>
     <?php include("footer.php"); ?>
 
-
+    <script src="../js/search.js"></script>
 </body>
 
 </html>
