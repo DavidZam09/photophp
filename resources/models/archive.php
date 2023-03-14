@@ -3,23 +3,26 @@
 include('conn.php');
 
 $client = $_POST['cliente'];
-$precinte = $_POST['precinto'];
+$presinto = $_POST['precinto'];
 $date = $_POST['date'];
-$img = $$_FILES['img'];
+$img = $_FILES['img']['name'];
+$valid = $_FILES['img'];
+$temp = $_FILES['img']['tmp_name'];
 $folderPath = "../img/";
-$fileName = $img['tmp_name'] . '.png';
 
-if ($img['type'] == 'image/png' || $img['type'] == 'image/jpg' || $img['type'] == 'image/jpeg') {
 
-    $query = "INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
-    VALUES('" . $client . "','" . $precinte . "','" . $date . "','" . $fileName . "' ";
-    echo "yes" . $query;
-    /* if ($con->query($query)) {
-        move_uploaded_file($img['name'], $folderPath);
+
+if ($valid['type'] == 'image/png' || $valid['type'] == 'image/jpg' || $valid['type'] == 'image/jpeg') {
+
+    $query = $con->query("INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
+    VALUES('" . $client . "','" . $presinto . "','" . $date . "','" . $img . "');");
+
+    if ($query) {
+        move_uploaded_file($temp, $folderPath . '/' . $img);
         echo " Uploaded";
     } else {
-        echo"Error uploading";
-    }*/
+        echo "Error uploading";
+    }
 } else {
     echo "Archivo no valido!";
 }

@@ -61,14 +61,14 @@
     <div class="container">
         <div class="formulario">
 
-            <form action="" enctype="multipart/form-data" id="formulario">
-                <input type="text" name="cliente" placeholder="Cliente" required class="form-control">
+            <form action="../models/archive.php" method="post" enctype="multipart/form-data" id="formulario">
+                <input type="text" name="cliente" id="cliente" placeholder="Cliente" required class="form-control">
 
-                <input type="text" name="precinto" placeholder="Precinto" class="form-control" required>
+                <input type="text" name="precinto" id="precinto" placeholder="Precinto" class="form-control" required>
 
-                <input type="date" name="date" required class="form-control">
+                <input type="date" name="date" id="date" required class="form-control">
 
-                <input type="file" name="img" required class="form-control" />
+                <input type="file" name="img" size="20" id="img" required class="form-control" />
 
                 <button type="submit" name="button" class="form-control">Guardar</button>
             </form>
@@ -77,8 +77,9 @@
 
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="../js/insert.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
     <?php include('footer.php') ?>
 
 </body>
