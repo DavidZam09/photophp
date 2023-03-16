@@ -54,7 +54,6 @@
                     </div>
                     <p id="estado"></p>
                     <div id="results">
-
                     </div>
                 </div>
 

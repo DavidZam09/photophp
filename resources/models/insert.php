@@ -21,7 +21,7 @@ file_put_contents($file, $image_base64);
 
 include_once "conn.php";
 
-if ($fotoo = $con->query("INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
+if ($fotoo = $con->query("INSERT INTO fotos(`cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
  VALUES('" . $client . "','" . $presinto . "','" . $date . "','" . $fileName . "');")) {
     echo "Datos Agregados satisfactoriamente";
 } else {

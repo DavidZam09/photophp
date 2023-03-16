@@ -12,38 +12,15 @@
     <link rel="stylesheet" href="../css/modal.css">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <title>Consultas</title>
     <style>
-        .titulo {
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #campo {
-            height: 100%;
-            width: 100%;
-        }
-
-        .img {
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-        }
-
         #row {
             text-align: center;
             justify-content: center;
             align-items: center;
         }
-
-        #alert {
-            justify-content: center;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
     </style>
-    <title>Consultas</title>
 </head>
 
 <body>
@@ -52,26 +29,29 @@
     <div class="titulo">
         <h3> Consultar Diseños</h3>
     </div>
+
     <div class="container">
         <div class="row" id="row">
-            <form action="" method="get">
+            <form action="" method="post">
                 <div class="form-group">
                     <div>
                         <label for="campo">Buscador</label>
                         <input class="form-control" type="text" name="campo" id="campo">
                         <small style=" text-align: left;">Puedes buscar por Nombre de Cliente o Presinto.</small>
+                        <select class="form-select" aria-label="Default select example" id="filter" name="filter">
+                            <option selected>Filtrar</option>
+                            <option value="presinto">Precinto</option>
+                            <option value="fecha_foto">Fecha</option>
+                        </select>
                     </div>
                     <br>
-
                     <div>
-                        <input type="submit" id="boton" name="boton" value="Buscar">
+                        <input type="button" id="boton" name="boton" onclick="getData()" value="Buscar">
                     </div>
                 </div>
             </form>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-            <?php
-            include 'pagination.php';
+
+            <?php include 'pagination.php';
             $page = (isset($_REQUEST['page']) && !empty($_REQUEST['page'])) ? $_REQUEST['page'] : 1;
             $per_page = 12;
             $adjacents  = 4;
@@ -87,6 +67,7 @@
             } else {
                 echo $con . error_log(1);
             ?>
+
                 <div id="alert">
                     <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
                         <img style='align-items: center; justify-content: center; text-align: center;' src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
@@ -95,152 +76,26 @@
                         <label>No hay Diseños, Intenta Buscar de Nuevo</label>
                     </div>
                 </div>
-                <?php
+
+            <?php
             }
             $total_pages = ceil($numrows / $per_page);
             $reload = './welcome.blade.php';
 
             if ($numrows > 0) {
-                if (isset($_GET['boton']) && $_GET['campo'] != null) {
-
-                    $campo = $_GET['campo'];
-                    include_once('../models/conn.php');
-                    $query = $con->query("SELECT * FROM fotos where `id_cliente` LIKE '%$campo%' OR `presinto` LIKE '%$campo%' ORDER BY `fecha_foto` ASC");
-
-                    if ($query->fetch() == null) {
-
-                ?>
-
-                        <div id="alert">
-                            <div class='thumbnail'>
-                                <img src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
-                            </div>
-                            <div class='caption'>
-                                <label>No hay Diseños con este precinto o nombre de cliente, Intenta Buscar de Nuevo</label>
-                            </div>
-                        </div>
-                        <?php
-                    } else {
-                        $query = $con->query("SELECT * FROM fotos where `id_cliente` LIKE '%$campo%' OR `presinto` LIKE '%$campo%' ORDER BY `presinto`");
-                        while ($row = $query->fetchObject()) {
-                            $id_slide = $row->id;
-                            $cliente = $row->id_cliente;
-                            $presinto = $row->presinto;
-                            $fecha = $row->fecha_foto;
-                            $url_image = $row->ruta_archivo;
-                        ?>
-
-                            <div class="col-sm-6 col-md-3">
-                                <div class="thumbnail">
-                                    <?php echo "<img src='../img/" . $url_image . "'>"; ?>
-                                    <div class="caption" style="text-align: center;">
-                                        <h3>Cliente: <?php echo $cliente; ?></h3>
-                                        <h4>Precinto: <?php echo $presinto; ?></h4>
-                                        <p>Fecha: <?php echo $fecha ?></p>
-
-                                        <button type="button" class="btn btn-primary" onclick="mostrarModal(<?php echo $id_slide ?>)">
-                                            <i class='glyphicon glyphicon-eye-open'></i> ver</button>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                    <?php
-                        }
-                    }
-                } else {
-                    ?>
-
-                    <div id="alert">
-                        <div class='thumbnail' style='align-items: center; justify-content: center; text-align: center;'>
-                            <img src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
-                        </div>
-                        <div class='caption'>
-                            <label>No hay Diseños, Intenta Buscar de Nuevo</label>
-                        </div>
-                    </div>
-
-                <?php
-                }
-            } else {
-                ?>
-
-                <div id="alert">
-                    <div class='thumbnail'>
-                        <img src='https://png.pngitem.com/pimgs/s/52-524972_sad-negro-signo-simbolo-carita-triste-emoticon-positive.png'>
-                    </div>
-                    <div class='caption'>
-                        <label>No hay Diseños</label>
-                        <div class="row">
-
-                            <div class="col-xs-12 text-right">
-                                <a href='welcome.blade.php' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Diseño</a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <?php
-            }
-            if ($_SERVER['REQUEST_METHOD'] == "GET" && isset($_GET["titulo"])) {
-
-                include("../../conexion.php");
-
-                $titulo = mysqli_real_escape_string($conn, (strip_tags($_POST['titulo'], ENT_QUOTES)));
-                $descripcion = mysqli_real_escape_string($conn, ($_POST['descripcion']));
-                $orden = intval($_POST['orden']);
-                $estado = intval($_POST['estado']);
-                $id_banner = intval($_POST['id_banner']);
-                $sql = "UPDATE banner SET titulo='$titulo', descripcion='$descripcion', orden='$orden', estado='$estado' WHERE id='$id_banner'";
-                $query = mysqli_query($conn, $sql);
-                // if user has been added successfully
-                if ($query) {
-                    $messages[] = "Datos  han sido actualizados satisfactoriamente.";
-                } else {
-                    $errors[] = "Lo siento algo ha salido mal intenta nuevamente." . mysqli_error($conn);
-                }
-
-                if (isset($errors)) {
-
-                ?>
-                    <div class="alert alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>Error!</strong>
-                        <?php
-                        foreach ($errors as $error) {
-                            echo $error;
-                        }
-                        ?>
-                    </div>
-                <?php
-                }
-                if (isset($messages)) {
-
-                ?>
-                    <div class="alert alert-success" role="alert">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        <strong>¡Bien hecho!</strong>
-                        <?php
-                        foreach ($messages as $message) {
-                            echo $message;
-                        }
-                        ?>
-                    </div>
-            <?php
-                }
-            }
             ?>
+                <div class="result" id="result"></div>
         </div>
-
         <div class="table-pagination text-right">
             <?php echo paginate($reload, $page, $total_pages, $adjacents); ?>
         </div>
+    <?php } ?>
     </div>
-    <?php include("modal.php") ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="../js/filterSearch.js"></script>
+    <?php include("modal.php"); ?>
     <?php include("footer.php"); ?>
-
     <script src="../js/search.js"></script>
 </body>
 

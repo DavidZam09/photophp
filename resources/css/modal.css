@@ -1,3 +1,28 @@
 #modal {
     text-align: center;
 }
+
+.titulo {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#campo {
+    height: 100%;
+    width: 100%;
+}
+
+.img {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#alert {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}

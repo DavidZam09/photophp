@@ -14,7 +14,7 @@ $folderPath = "../img/";
 
 if ($valid['type'] == 'image/png' || $valid['type'] == 'image/jpg' || $valid['type'] == 'image/jpeg') {
 
-    $query = $con->query("INSERT INTO fotos(`id_cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
+    $query = $con->query("INSERT INTO fotos(`cliente`,`presinto`,`fecha_foto`,`ruta_archivo`)
     VALUES('" . $client . "','" . $presinto . "','" . $date . "','" . $img . "');");
 
     if ($query) {

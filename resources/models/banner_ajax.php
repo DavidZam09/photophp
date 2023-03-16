@@ -71,12 +71,12 @@ if ($action == 'ajax') {
 
         <div class="row">
             <?php
-            $query = $con->prepare("SELECT id, id_cliente, presinto, fecha_foto, ruta_archivo  FROM  $tables  $sWhere LIMIT $offset,$per_page");
+            $query = $con->prepare("SELECT id, cliente, presinto, fecha_foto, ruta_archivo  FROM  $tables  $sWhere LIMIT $offset,$per_page");
             $query->execute();
 
             while ($row = $query->fetchObject()) {
                 $id_slide = $row->id;
-                $cliente = $row->id_cliente;
+                $cliente = $row->cliente;
                 $presinto = $row->presinto;
                 $fecha = $row->fecha_foto;
                 $url_image = $row->ruta_archivo;
@@ -107,14 +107,12 @@ if ($action == 'ajax') {
                     </div>
                 </form>
 
-
         <?php
             }
         }
         ?>
 
         </div>
-
 
         <div class="table-pagination text-right">
 
