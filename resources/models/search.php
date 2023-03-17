@@ -4,7 +4,7 @@ include('conn.php');
 $campo = $_POST['campo'];
 $filter = $_POST['filter'];
 
-$html = '';
+$html = [];
 
 $query = $con->query("SELECT * FROM fotos where `cliente` LIKE '%$campo%' OR `presinto` LIKE '%$campo%' ORDER BY '%$filter%'  DESC");
 if ($query == null) {
@@ -19,7 +19,6 @@ if ($query == null) {
                     <label>No hay Diseños con este precinto o nombre de cliente, Intenta Buscar de Nuevo</label>
                 </div>
             </div>";
-    echo json_encode($html, JSON_UNESCAPED_UNICODE);
 } else {
     while ($row = $query->fetchObject()) {
         $id_slide = $row->id;
@@ -31,18 +30,18 @@ if ($query == null) {
 
         $html = "<div class='col-sm-6 col-md-3'>
         <div class='thumbnail'>
-           <img src='../img/" . $url_image . "'>
+           <img src='../img/$url_image '>
             <div class='caption' style='text-align: center;'>
-                <h3>Cliente:" . $cliente . "</h3>
-                <h4>Precinto:" . $presinto . "</h4>
-                <p>Fecha:" . $fecha . "</p>
-
-                <button type='button' class='btn btn-primary' onclick='mostrarModal($id_slide)'>
+                <h3>Cliente: $cliente</h3>
+                <h4>Precinto:$presinto </h4>
+                <p>Fecha: $fecha </p>
+                <button type='button' class='btn btn-primary' onclick='mostrarModal($row->id)'>
                     <i class='glyphicon glyphicon-eye-open'></i> ver</button>
-                </p>
             </div>
         </div>
     </div>";
-        echo json_encode($html, JSON_UNESCAPED_UNICODE);
+    echo json_encode($html, JSON_UNESCAPED_UNICODE);
     }
+
 }
+
