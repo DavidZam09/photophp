@@ -54,8 +54,7 @@ $active_banner = "active";
                     <a href='welcome.blade.php' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Agregar Diseño</a>
                     <a href='archiveUp.php' class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Subir Diseño</a>
                 </div>
-
-
+         
             </div>
 
             <br>

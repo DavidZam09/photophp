@@ -1,52 +1,41 @@
-$('#filter').change(function () {
+$(document).ready(function () {
+    $('#filtro-form').on('submit', function (event) {
+        event.preventDefault();
 
-    let filter = $(this).val();
+        var filtro = $('#filtro-select').val();
+        var campo = $('#campo').val();
 
-    let campo = document.getElementById('campo').value;
+        $.ajax({
+            url: '../models/search.php',
+            type: 'GET',
+            data: {
+                filter: filtro,
+                campo: campo
+            },
+            success: function (response) {
 
-    console.log(filter, campo)
-
-    if (filter == 'Filtrar') {
-        filter = 'id';
-    }
-    else {
-        filter = $(this).val();
-    }
-    $.ajax({
-        type: "POST",
-        url: "../models/search.php",
-        data: {
-            campo: campo,
-            filter: filter
-        },
-        dataType: 'json',
-        beforeSend: function (objeto) {
-            $("#result").html("Mensaje: Cargando...");
-        },
-        success: function (datos) {
-            $("#result").html(datos);
-        }
+                $('#result').html(response).show();
+            }
+        });
     });
-})
-function getData() {
-    let campo = document.getElementById('campo').value;
-    $.ajax({
-        url: "../models/search.php",
-        data: {
-            campo: campo,
-            filter: 'id'
-        },
-        beforeSend: function (objeto) {
-            $("#result").html("Mensaje: Cargando...");
-        },
-        success: function (datos) {
-                $("#result").html(datos).fadeIn('slow');
-        }
-    });
-}
 
+    $('#filtro-select').change(function () {
 
+        var filtro = $(this).val();
+        var campo = $('#campo').val();
 
+        $.ajax({
+            url: '../models/search.php',
+            type: 'GET',
+            data: {
+                filter: filtro,
+                campo: campo
+            },
+            success: function (response) {
 
-
-
+                $('#result').html(response).show();
+            }
+        });
+    }
+    )
+});

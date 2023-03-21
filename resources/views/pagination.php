@@ -15,7 +15,6 @@ function paginate($reload, $page, $tpages, $adjacents) {
 
 	}
 
-
 	if($page>($adjacents+1)) {
 		$out.= "<li><a href='javascript:void(0);' onclick='load(1)'>1</a></li>";
 	}

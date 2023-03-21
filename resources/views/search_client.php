@@ -32,23 +32,16 @@
 
     <div class="container">
         <div class="row" id="row">
-            <form action="" method="post">
-                <div class="form-group">
-                    <div>
-                        <label for="campo">Buscador</label>
-                        <input class="form-control" type="text" name="campo" id="campo">
-                        <small style=" text-align: left;">Puedes buscar por Nombre de Cliente o Presinto.</small>
-                        <select class="form-select" aria-label="Default select example" id="filter" name="filter">
-                            <option selected>Filtrar</option>
-                            <option value="presinto">Precinto</option>
-                            <option value="fecha_foto">Fecha</option>
-                        </select>
-                    </div>
-                    <br>
-                    <div>
-                        <input type="button" id="boton" name="boton" onclick="getData()" value="Buscar">
-                    </div>
-                </div>
+            <form id="filtro-form">
+                <label for="campo">Buscador</label>
+                <input class="form-control" type="text" name="campo" id="campo">
+                <small style=" text-align: left;">Puedes buscar por Nombre de Cliente o Presinto.</small>
+                <select id="filtro-select" name="filtro">
+                    <option value="">Todos</option>
+                    <option value="presinto">Precinto</option>
+                    <option value="fecha_foto">Fecha</option>
+                </select>
+                <button type="submit">Filtrar</button>
             </form>
 
             <?php include 'pagination.php';
@@ -97,6 +90,7 @@
     <?php include("modal.php"); ?>
     <?php include("footer.php"); ?>
     <script src="../js/search.js"></script>
+    <script src="../js/filterSearch.js"></script>
 </body>
 
 </html>
